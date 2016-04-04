@@ -1,38 +1,13 @@
 <!DOCTYPE html>
 <head>
-    <title>CO (ppm)</title>
-
-<meta charset="utf-8">
-<link rel="icon" type="image/png" href="http://cociclo.io/images/icon.png">
-
-    <style> /* set the CSS */
-
-body { 
-    font: 12px Arial;
-    background-color:black;
-    fill:grey; 
-}
-
-path { 
-    stroke: steelblue;
-    stroke-width: 2;
-    fill: none;
-}
-
-.axis path,
-.axis line {
-    fill: none;
-    stroke: grey;
-    stroke-width: 1;
-    shape-rendering: crispEdges;
-}
-
-</style>
-    
+  <title>CO (ppm)</title>
+  <meta charset="utf-8">
+  <link rel="icon" type="image/png" href="http://cociclo.io/images/icon.png">
+  <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
 
-<!-- load the d3.js library -->    
+<!-- load the d3.js library -->
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
@@ -59,27 +34,27 @@ var yAxis = d3.svg.axis().scale(y)
 
 // Define the line
 var valueline = d3.svg.line()
-    .interpolate("basis") 
+    .interpolate("basis")
     .x(function(d) { return x(d.Date); })
     .y(function(d) { return y(d.CO); });
-    
+
 // Adds the svg canvas
 var svg = d3.select("body")
     .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
     .append("g")
-        .attr("transform", 
+        .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
 
 // Get the data
 d3.json("data.json", function(error, data) {
     data.forEach(function(d) {
-      
+
         d.Date = parseDate(d.Date);
         d.CO = +d.CO;
         console.log(d.Date + ", " + d.CO);
-        
+
     });
 
     // Scale the range of the data
@@ -102,9 +77,9 @@ d3.json("data.json", function(error, data) {
         .attr("class", "y axis")
         .call(yAxis);
 
-    
+
     /////// texte labels ////// Add the text label for the x axis
-    
+
     svg.append("text")
         .attr("transform", "translate(" + (width / 2) + " ," + (height + margin.bottom) + ")")
         .style("text-anchor", "middle")
@@ -124,8 +99,8 @@ d3.json("data.json", function(error, data) {
         .text("CO (ppm)");
 
     ///////
-    
+
 });
-    
+
 </script>
 </body>
